@@ -14,11 +14,10 @@ import (
 
 var v *viper.Viper
 
-func init() {
-	v = viper.New()
-}
 func InitConfig(filePath string) error {
+	v = viper.New()
 	v.SetConfigFile(filePath)
+	v.SetConfigType("yaml")
 	if err := v.ReadInConfig(); err != nil {
 		return err
 	}
@@ -26,7 +25,16 @@ func InitConfig(filePath string) error {
 	return nil
 }
 
-func GetViperfile() *viper.Viper {
+//v := viper.New()
+//v.SetConfigFile(config)
+//v.SetConfigType("yaml")
+//err := v.ReadInConfig()
+//if err != nil {
+//panic(any(fmt.Errorf("Fatal error config file: %s \n", err)))
+//}
+//v.WatchConfig()
+
+func GetViper() *viper.Viper {
 	return v
 }
 

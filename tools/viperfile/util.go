@@ -7,7 +7,7 @@
 package viperfile
 
 func ViperContainsKey(key string) bool {
-	keys := GetViperfile().AllKeys()
+	keys := GetViper().AllKeys()
 
 	if len(keys) == 0 {
 		return false
@@ -22,21 +22,21 @@ func ViperContainsKey(key string) bool {
 
 func DefaultViperString(key, defaultValue string) string {
 	if ViperContainsKey(key) {
-		return GetViperfile().GetString(key)
+		return GetViper().GetString(key)
 	}
 	return defaultValue
 }
 
 func DefaultViperInt(key string, defaultValue int) int {
 	if ViperContainsKey(key) {
-		return GetViperfile().GetInt(key)
+		return GetViper().GetInt(key)
 	}
 	return defaultValue
 }
 
 func DefaultViperBool(key string, defaultValue bool) bool {
 	if ViperContainsKey(key) {
-		return GetViperfile().GetBool(key)
+		return GetViper().GetBool(key)
 	}
 	return defaultValue
 }

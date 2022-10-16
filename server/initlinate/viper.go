@@ -1,0 +1,38 @@
+package initlinate
+
+import (
+	"flag"
+	"gitee.com/goweb/tools/viperfile"
+	"github.com/gin-gonic/gin"
+	"log"
+)
+
+const (
+	ConfigDefaultFile = "config.yaml"
+	ConfigTestFile    = "config.test.yaml"
+	ConfigDebugFile   = "config.debug.yaml"
+	ConfigReleaseFile = "config.release.yaml"
+)
+
+func InitViper() {
+	var config string
+	flag.StringVar(&config, "c", "", "choose config file.")
+	flag.Parse()
+
+	if config == "" {
+		switch gin.Mode() {
+		case gin.DebugMode:
+			config = ConfigDebugFile
+		case gin.ReleaseMode:
+			config = ConfigReleaseFile
+		case gin.TestMode:
+			config = ConfigTestFile
+		default:
+			config = ConfigDefaultFile
+		}
+	}
+	// 开始进行文件读取
+	if err := viperfile.InitConfig(config); err != nil {
+		log.Fatalln(err)
+	}
+}
