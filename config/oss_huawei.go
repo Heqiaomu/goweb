@@ -1,6 +1,7 @@
 package config
 
 type HuaWeiObs struct {
+	Enabled   bool   `mapstructure:"enabled" json:"enabled" yaml:"enabled"`
 	Path      string `mapstructure:"path" json:"path" yaml:"path"`
 	Bucket    string `mapstructure:"bucket" json:"bucket" yaml:"bucket"`
 	Endpoint  string `mapstructure:"endpoint" json:"endpoint" yaml:"endpoint"`

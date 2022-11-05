@@ -7,10 +7,11 @@
 package logger
 
 import (
-	"gitee.com/goweb/tools/viperfile"
+	"fmt"
+	"gitee.com/goweb/config"
+	"gitee.com/goweb/tools/file"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"gopkg.in/natefinch/lumberjack.v2"
 	"os"
 	"runtime"
 	"strconv"
@@ -23,6 +24,9 @@ var logonce sync.Once
 var l *zap.Logger
 
 func Logger() *zap.Logger {
+	if l != nil {
+		return l
+	}
 	logonce.Do(func() {
 		l = getLogger()
 	})
@@ -30,73 +34,18 @@ func Logger() *zap.Logger {
 }
 
 func getLogger() *zap.Logger {
-	infoWriter := lumberjack.Logger{
-		Filename:   viperfile.DefaultViperString("log.info_file", "log/info.log"), // 日志输出地址
-		LocalTime:  viperfile.DefaultViperBool("log.filename_with_time", true),    // 日志文件名时间
-		MaxSize:    viperfile.DefaultViperInt("log.file_max_size", 100),           // 每个日志文件保存的最大尺寸 单位：M
-		MaxBackups: viperfile.DefaultViperInt("log.file_max_backups", 30),         // 日志文件最多保存多少个备份
-		MaxAge:     viperfile.DefaultViperInt("log.file_max_age", 30),             // 文件最多保存多少天
-		Compress:   viperfile.DefaultViperBool("log.file_compress", true),         // 是否压缩
+	if ok, _ := file.PathExists(config.GetConfig().Zap.Director); !ok {
+		fmt.Printf("create %v directory\n", config.GetConfig().Zap.Director)
+		_ = os.Mkdir(config.GetConfig().Zap.Director, os.ModePerm)
 	}
-	errorWriter := lumberjack.Logger{
-		Filename:   viperfile.DefaultViperString("log.error_file", "log/error.log"), // 日志输出地址
-		LocalTime:  viperfile.DefaultViperBool("log.filename_with_time", true),      // 日志文件名时间
-		MaxSize:    viperfile.DefaultViperInt("log.file_max_size", 100),             // 每个日志文件保存的最大尺寸 单位：M
-		MaxBackups: viperfile.DefaultViperInt("log.file_max_backups", 30),           // 日志文件最多保存多少个备份
-		MaxAge:     viperfile.DefaultViperInt("log.file_max_age", 30),               // 文件最多保存多少天
-		Compress:   viperfile.DefaultViperBool("log.file_compress", true),           // 是否压缩
-	}
-	// 日志输出格式
-	encoderConfig := zapcore.EncoderConfig{
-		TimeKey:        "time",
-		LevelKey:       "level",
-		NameKey:        "logger",
-		CallerKey:      "",
-		MessageKey:     "msg",
-		StacktraceKey:  "",
-		LineEnding:     zapcore.DefaultLineEnding,
-		EncodeLevel:    zapcore.LowercaseLevelEncoder,
-		EncodeTime:     zapcore.ISO8601TimeEncoder,
-		EncodeDuration: zapcore.SecondsDurationEncoder,
-		EncodeCaller:   zapcore.ShortCallerEncoder, // FullCallerEncoder
-		EncodeName:     zapcore.FullNameEncoder,
-	}
-	consoleConfig := zapcore.EncoderConfig{
-		LevelKey:       "level",
-		TimeKey:        "time",
-		NameKey:        "",
-		CallerKey:      "",
-		MessageKey:     "msg",
-		StacktraceKey:  "",
-		LineEnding:     zapcore.DefaultLineEnding,
-		EncodeLevel:    zapcore.CapitalColorLevelEncoder,
-		EncodeTime:     zapcore.ISO8601TimeEncoder,
-		EncodeDuration: zapcore.SecondsDurationEncoder,
-		EncodeCaller:   zapcore.FullCallerEncoder,
-		EncodeName:     zapcore.FullNameEncoder,
-	}
-	// 根据配置调整日志级别, 支持http接口动态修改zap日志级别
-	atomicLevel := zap.NewAtomicLevel()
-	atomicLevel.SetLevel(zap.DebugLevel)
+	cores := GetZapCores()
 
-	var l zapcore.Level
-	_ = l.UnmarshalText([]byte(viperfile.DefaultViperString("log.console_level", "info")))
-	atomicLevel.SetLevel(l)
+	l = zap.New(zapcore.NewTee(cores...))
 
-	// 设置输出源，输出格式，日志等级
-	core := zapcore.NewTee(
-		zapcore.NewCore(zapcore.NewJSONEncoder(encoderConfig), zapcore.AddSync(&infoWriter), zap.InfoLevel),
-		zapcore.NewCore(zapcore.NewJSONEncoder(encoderConfig), zapcore.AddSync(&errorWriter), zap.ErrorLevel),
-		zapcore.NewCore(zapcore.NewConsoleEncoder(consoleConfig), zapcore.AddSync(os.Stdout), atomicLevel),
-	)
-	logger := zap.New(core)
-
-	if viperfile.DefaultViperBool("log.debug", false) {
-		// 开启开发模式，堆栈跟踪
-		logger.WithOptions(zap.AddCaller(), zap.AddStacktrace(zap.InfoLevel))
+	if config.GetConfig().Zap.ShowLine {
+		l = l.WithOptions(zap.AddCaller())
 	}
-	logger.WithOptions(zap.Development())
-	return logger
+	return l
 }
 
 type Level string

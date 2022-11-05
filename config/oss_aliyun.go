@@ -1,6 +1,7 @@
 package config
 
 type AliyunOSS struct {
+	Enabled         bool   `mapstructure:"enabled" json:"enabled" yaml:"enabled"`
 	Endpoint        string `mapstructure:"endpoint" json:"endpoint" yaml:"endpoint"`
 	AccessKeyId     string `mapstructure:"access-key-id" json:"access-key-id" yaml:"access-key-id"`
 	AccessKeySecret string `mapstructure:"access-key-secret" json:"access-key-secret" yaml:"access-key-secret"`

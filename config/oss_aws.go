@@ -1,6 +1,7 @@
 package config
 
 type AwsS3 struct {
+	Enabled          bool   `mapstructure:"enabled" json:"enabled" yaml:"enabled"`
 	Bucket           string `mapstructure:"bucket" json:"bucket" yaml:"bucket"`
 	Region           string `mapstructure:"region" json:"region" yaml:"region"`
 	Endpoint         string `mapstructure:"endpoint" json:"endpoint" yaml:"endpoint"`

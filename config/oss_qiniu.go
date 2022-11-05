@@ -1,6 +1,7 @@
 package config
 
 type Qiniu struct {
+	Enabled       bool   `mapstructure:"enabled" json:"enabled" yaml:"enabled"`
 	Zone          string `mapstructure:"zone" json:"zone" yaml:"zone"`                                  // 存储区域
 	Bucket        string `mapstructure:"bucket" json:"bucket" yaml:"bucket"`                            // 空间名称
 	ImgPath       string `mapstructure:"img-path" json:"img-path" yaml:"img-path"`                      // CDN加速域名

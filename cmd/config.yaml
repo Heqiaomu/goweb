@@ -1,0 +1,95 @@
+system:
+  env: public
+  addr: 8888
+  db-type: mysql
+  oss-type: local
+  use-multipoint: false
+  iplimit-count: 15000
+  iplimit-time: 3600
+
+jwt:
+  signing-key: qmPlus
+  expires-time: 7d
+  buffer-time: 1d
+  issuer: qmPlus
+
+zap:
+  level: info
+  format: json
+  prefix: "[gitee.com/goweb/server]"
+  director: log
+  show-line: true
+  encode-level: LowercaseColorLevelEncoder
+  file_max_backups: stacktrace
+  file_max_age: true
+  file_compress: true
+
+redis:
+  db: 0
+  addr: 127.0.0.1:6379
+  password: ""
+  enabled: false
+
+email:
+  to: xxx@qq.com
+  port: 465
+  from: xxx@163.com
+  host: smtp.163.com
+  is-ssl: true
+  secret: xxx
+  nickname: test
+
+mysql:
+  path: "127.0.0.1"
+  port: "3306"
+  config: ""
+  db-name: "cloud-mall"
+  username: "root"
+  password: "123456"
+  max-idle-conns: 10
+  max-open-conns: 100
+  log-mode: ""
+  log-zap: false
+
+oss:
+  local:
+    path: uploads/file
+    store-path: uploads/file
+  qiniu:
+    zone: ZoneHuaDong
+    bucket: ""
+    img-path: ""
+    use-https: false
+    access-key: ""
+    secret-key: ""
+    use-cdn-domains: false
+  aliyun-oss:
+    endpoint: yourEndpoint
+    access-key-id: yourAccessKeyId
+    access-key-secret: yourAccessKeySecret
+    bucket-name: yourBucketName
+    bucket-url: yourBucketUrl
+    base-path: yourBasePath
+  tencent-cos:
+    bucket: xxxxx-10005608
+    region: ap-shanghai
+    secret-id: your-secret-id
+    secret-key: your-secret-key
+    base-url: https://gin.vue.admin
+    path-prefix: ""
+  aws-s3:
+    bucket: xxxxx-10005608
+    region: ap-shanghai
+    endpoint: ""
+    s3-force-path-style: false
+    disable-ssl: false
+    secret-id: your-secret-id
+    secret-key: your-secret-key
+    base-url: https://gin.vue.admin
+    path-prefix: ""
+  hua-wei-obs:
+    path: you-path
+    bucket: you-bucket
+    endpoint: you-endpoint
+    access-key: you-access-key
+    secret-key: you-secret-key

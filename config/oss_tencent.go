@@ -1,6 +1,7 @@
 package config
 
 type TencentCOS struct {
+	Enabled    bool   `mapstructure:"enabled" json:"enabled" yaml:"enabled"`
 	Bucket     string `mapstructure:"bucket" json:"bucket" yaml:"bucket"`
 	Region     string `mapstructure:"region" json:"region" yaml:"region"`
 	SecretID   string `mapstructure:"secret-id" json:"secret-id" yaml:"secret-id"`
