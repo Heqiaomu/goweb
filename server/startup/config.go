@@ -1,7 +1,7 @@
 package startup
 
 import (
-	"github.com/sun-iot/goweb/config"
+	"github.com/Heqiaomu/goweb/config"
 	"log"
 )
 

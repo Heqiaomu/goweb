@@ -2,8 +2,8 @@ package logger
 
 import (
 	"fmt"
+	"github.com/Heqiaomu/goweb/config"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
-	"github.com/sun-iot/goweb/config"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"os"

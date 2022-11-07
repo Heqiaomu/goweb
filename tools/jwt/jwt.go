@@ -2,9 +2,9 @@ package jwt
 
 import (
 	"errors"
+	"github.com/Heqiaomu/goweb/config"
+	"github.com/Heqiaomu/goweb/tools/timer"
 	uuid "github.com/satori/go.uuid"
-	"github.com/sun-iot/goweb/config"
-	"github.com/sun-iot/goweb/tools/timer"
 	"time"
 
 	jwtV4 "github.com/golang-jwt/jwt/v4"

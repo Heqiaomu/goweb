@@ -1,7 +1,7 @@
 package startup
 
 import (
-	"github.com/sun-iot/goweb/tools/mysql"
+	"github.com/Heqiaomu/goweb/tools/mysql"
 	"log"
 )
 

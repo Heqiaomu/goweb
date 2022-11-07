@@ -8,8 +8,8 @@ package logger
 
 import (
 	"fmt"
-	"github.com/sun-iot/goweb/config"
-	"github.com/sun-iot/goweb/tools/file"
+	"github.com/Heqiaomu/goweb/config"
+	"github.com/Heqiaomu/goweb/tools/file"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"os"

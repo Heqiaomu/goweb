@@ -1,9 +1,9 @@
 package jwt
 
 import (
+	"github.com/Heqiaomu/goweb/tools/logger"
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
-	"github.com/sun-iot/goweb/tools/logger"
 )
 
 func GetClaims(c *gin.Context) (*CustomClaims, error) {

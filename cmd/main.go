@@ -7,8 +7,8 @@
 package main
 
 import (
-	"github.com/sun-iot/goweb/server"
-	"github.com/sun-iot/goweb/server/startup"
+	"github.com/Heqiaomu/goweb/server"
+	"github.com/Heqiaomu/goweb/server/startup"
 )
 
 func main() {

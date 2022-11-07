@@ -2,8 +2,8 @@ package mysql
 
 import (
 	"context"
-	"github.com/sun-iot/goweb/config"
-	"github.com/sun-iot/goweb/global"
+	"github.com/Heqiaomu/goweb/config"
+	"github.com/Heqiaomu/goweb/global"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

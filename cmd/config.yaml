@@ -1,7 +1,7 @@
 system:
   env: public
   model: dev
-  addr: 8888
+  addr: 8080
   db-type: mysql
   oss-type: local
   use-multipoint: false
@@ -17,7 +17,7 @@ jwt:
 zap:
   level: info
   format: confole
-  prefix: "[github.com/sun-iot/goweb/server]"
+  prefix: "[github.com/Heqiaomu/goweb/server]"
   director: log
   show-line: true
   encode-level: CapitalLevelEncoder

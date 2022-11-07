@@ -1,7 +1,7 @@
 package logic
 
 import (
-	us "github.com/sun-iot/goweb/service"
+	us "github.com/Heqiaomu/goweb/service"
 )
 
 type UserLogic struct {

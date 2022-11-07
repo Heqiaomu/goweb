@@ -3,8 +3,8 @@ package oss
 import (
 	"errors"
 	"fmt"
-	"github.com/sun-iot/goweb/config"
-	"github.com/sun-iot/goweb/tools/logger"
+	"github.com/Heqiaomu/goweb/config"
+	"github.com/Heqiaomu/goweb/tools/logger"
 	"mime/multipart"
 	"time"
 

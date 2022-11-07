@@ -1,4 +1,4 @@
-module github.com/sun-iot/goweb
+module github.com/Heqiaomu/goweb
 
 go 1.18
 

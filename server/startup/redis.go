@@ -1,8 +1,8 @@
 package startup
 
 import (
-	"github.com/sun-iot/goweb/config"
-	"github.com/sun-iot/goweb/tools/redis"
+	"github.com/Heqiaomu/goweb/config"
+	"github.com/Heqiaomu/goweb/tools/redis"
 	"log"
 )
 

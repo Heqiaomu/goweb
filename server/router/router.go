@@ -7,10 +7,10 @@
 package router
 
 import (
+	"github.com/Heqiaomu/goweb/config"
+	"github.com/Heqiaomu/goweb/server/middleware"
+	"github.com/Heqiaomu/goweb/tools/logger"
 	"github.com/gin-gonic/gin"
-	"github.com/sun-iot/goweb/config"
-	"github.com/sun-iot/goweb/server/middleware"
-	"github.com/sun-iot/goweb/tools/logger"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 )
