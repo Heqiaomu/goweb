@@ -1,8 +1,8 @@
 package handler
 
 import (
-	ul "gitee.com/goweb/logic"
 	"github.com/gin-gonic/gin"
+	ul "github.com/sun-iot/goweb/logic"
 )
 
 type UserApi struct {

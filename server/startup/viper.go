@@ -2,8 +2,8 @@ package startup
 
 import (
 	"flag"
-	"gitee.com/goweb/tools/viperfile"
 	"github.com/gin-gonic/gin"
+	"github.com/sun-iot/goweb/tools/viperfile"
 	"log"
 )
 

@@ -2,10 +2,10 @@ package redis
 
 import (
 	"context"
-	"gitee.com/goweb/config"
-	"gitee.com/goweb/tools/logger"
 	"github.com/go-redis/redis/v8"
 	"github.com/mojocn/base64Captcha"
+	"github.com/sun-iot/goweb/config"
+	"github.com/sun-iot/goweb/tools/logger"
 	"go.uber.org/zap"
 	"sync"
 	"time"

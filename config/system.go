@@ -9,6 +9,7 @@ type System struct {
 	TLS           TLS    `mapstructure:"tls" json:"tls" yaml:"tls"`
 	LimitCountIP  int    `mapstructure:"iplimit-count" json:"iplimit-count" yaml:"iplimit-count"`
 	LimitTimeIP   int    `mapstructure:"iplimit-time" json:"iplimit-time" yaml:"iplimit-time"`
+	Model         string `mapstructure:"model" json:"model" yaml:"model"`
 }
 
 type TLS struct {

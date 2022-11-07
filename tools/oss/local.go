@@ -2,9 +2,9 @@ package oss
 
 import (
 	"errors"
-	"gitee.com/goweb/config"
-	md5File "gitee.com/goweb/tools/file"
-	"gitee.com/goweb/tools/logger"
+	"github.com/sun-iot/goweb/config"
+	md5File "github.com/sun-iot/goweb/tools/file"
+	"github.com/sun-iot/goweb/tools/logger"
 	"io"
 	"mime/multipart"
 	"os"

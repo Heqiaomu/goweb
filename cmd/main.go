@@ -7,25 +7,12 @@
 package main
 
 import (
-	"gitee.com/goweb/server"
-	"gitee.com/goweb/server/startup"
-	"log"
+	"github.com/sun-iot/goweb/server"
+	"github.com/sun-iot/goweb/server/startup"
 )
 
 func main() {
 	// 初始化系统
-	log.Printf("Start to init viper")
-	startup.InitViper()
-	log.Printf("Start to init config")
-	startup.InitConfig()
-	log.Printf("Start to init log")
-	startup.InitLogger()
-	log.Printf("Start to init redis, if enabled")
-	startup.InitRedis()
-	log.Printf("Start to init mysql, if enabled")
-	startup.InitMySQL()
-	log.Printf("All ready. Start server")
-
+	startup.InitServer()
 	server.Start() // 启动 Gin 服务
-
 }

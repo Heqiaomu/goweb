@@ -2,8 +2,8 @@ package logger
 
 import (
 	"fmt"
-	"gitee.com/goweb/config"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
+	"github.com/sun-iot/goweb/config"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"os"
@@ -22,15 +22,16 @@ func GetEncoder() zapcore.Encoder {
 // GetEncoderConfig 获取zapcore.EncoderConfig
 func GetEncoderConfig() zapcore.EncoderConfig {
 	return zapcore.EncoderConfig{
-		MessageKey:     "message",
-		LevelKey:       "level",
-		TimeKey:        "time",
-		NameKey:        "logger",
-		CallerKey:      "caller",
-		StacktraceKey:  config.GetConfig().Zap.StacktraceKey,
-		LineEnding:     zapcore.DefaultLineEnding,
-		EncodeLevel:    config.GetConfig().Zap.ZapEncodeLevel(),
-		EncodeTime:     CustomTimeEncoder,
+		MessageKey:    "message",
+		LevelKey:      "level",
+		TimeKey:       "time",
+		NameKey:       "logger",
+		CallerKey:     "caller",
+		StacktraceKey: config.GetConfig().Zap.StacktraceKey,
+		LineEnding:    zapcore.DefaultLineEnding,
+		EncodeLevel:   config.GetConfig().Zap.ZapEncodeLevel(),
+		//EncodeTime:     CustomTimeEncoder,
+		EncodeTime:     zapcore.ISO8601TimeEncoder,
 		EncodeDuration: zapcore.SecondsDurationEncoder,
 		EncodeCaller:   zapcore.FullCallerEncoder,
 	}
@@ -43,7 +44,6 @@ func GetEncoderCore(l zapcore.Level, level zap.LevelEnablerFunc) zapcore.Core {
 		fmt.Printf("Get Write Syncer Failed err:%v", err.Error())
 		return nil
 	}
-
 	return zapcore.NewCore(GetEncoder(), writer, level)
 }
 
@@ -55,9 +55,12 @@ func CustomTimeEncoder(t time.Time, encoder zapcore.PrimitiveArrayEncoder) {
 // GetZapCores 根据配置文件的Level获取 []zapcore.Core
 func GetZapCores() []zapcore.Core {
 	cores := make([]zapcore.Core, 0, 7)
-	for level := config.GetConfig().Zap.TransportLevel(); level <= zapcore.FatalLevel; level++ {
+	level := config.GetConfig().Zap.TransportLevel()
+
+	for level := level; level <= zapcore.FatalLevel; level++ {
 		cores = append(cores, GetEncoderCore(level, GetLevelPriority(level)))
 	}
+
 	return cores
 }
 
@@ -108,7 +111,8 @@ func GetWriteSyncer(level string) (zapcore.WriteSyncer, error) {
 		rotatelogs.WithRotationTime(time.Hour*24),
 	)
 	if config.GetConfig().Zap.LogInConsole {
-		return zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(fileWriter)), err
+		//return zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(fileWriter)), err
+		return zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout)), err
 	}
 	return zapcore.AddSync(fileWriter), err
 }

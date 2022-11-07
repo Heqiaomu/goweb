@@ -7,10 +7,10 @@
 package router
 
 import (
-	"gitee.com/goweb/config"
-	"gitee.com/goweb/server/middleware"
-	"gitee.com/goweb/tools/logger"
 	"github.com/gin-gonic/gin"
+	"github.com/sun-iot/goweb/config"
+	"github.com/sun-iot/goweb/server/middleware"
+	"github.com/sun-iot/goweb/tools/logger"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 )
@@ -23,9 +23,10 @@ func Routers() *gin.Engine {
 	engine.Use(middleware.Cors()) // 直接放行全部跨域请求
 
 	engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	logger.Info("register swagger handler")
 
 	public := engine.Group("")
+	logger.Infof("Start register common routers")
+
 	commonRouter.InitCommonRouter(public)
 
 	private := engine.Group("")
@@ -33,6 +34,5 @@ func Routers() *gin.Engine {
 	{
 		userRouter.InitUserRouter(private) // 注册功能api路由
 	}
-	logger.Info("router register success")
 	return engine
 }

@@ -2,7 +2,7 @@ package mysql
 
 import (
 	"fmt"
-	"gitee.com/goweb/config"
+	"github.com/sun-iot/goweb/config"
 	"gorm.io/gorm/logger"
 )
 

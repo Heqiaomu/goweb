@@ -1,9 +1,9 @@
 package oss
 
 import (
-	"gitee.com/goweb/config"
 	"github.com/huaweicloud/huaweicloud-sdk-go-obs/obs"
 	"github.com/pkg/errors"
+	"github.com/sun-iot/goweb/config"
 	"mime/multipart"
 )
 

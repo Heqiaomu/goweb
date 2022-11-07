@@ -1,13 +1,12 @@
 package jwt
 
 import (
-	systemReq "gitee.com/goweb/model/common/request"
-	"gitee.com/goweb/tools/logger"
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
+	"github.com/sun-iot/goweb/tools/logger"
 )
 
-func GetClaims(c *gin.Context) (*systemReq.CustomClaims, error) {
+func GetClaims(c *gin.Context) (*CustomClaims, error) {
 	token := c.Request.Header.Get("x-token")
 	j := NewJWT()
 	claims, err := j.ParseToken(token)
@@ -23,11 +22,11 @@ func GetUserID(c *gin.Context) uint {
 		if cl, err := GetClaims(c); err != nil {
 			return 0
 		} else {
-			return cl.ID
+			return cl.UserID
 		}
 	} else {
-		waitUse := claims.(*systemReq.CustomClaims)
-		return waitUse.ID
+		waitUse := claims.(*CustomClaims)
+		return waitUse.UserID
 	}
 }
 
@@ -40,7 +39,7 @@ func GetUserUuid(c *gin.Context) uuid.UUID {
 			return cl.UUID
 		}
 	} else {
-		waitUse := claims.(*systemReq.CustomClaims)
+		waitUse := claims.(*CustomClaims)
 		return waitUse.UUID
 	}
 }
@@ -54,13 +53,13 @@ func GetUserAuthorityId(c *gin.Context) uint {
 			return cl.AuthorityId
 		}
 	} else {
-		waitUse := claims.(*systemReq.CustomClaims)
+		waitUse := claims.(*CustomClaims)
 		return waitUse.AuthorityId
 	}
 }
 
 // GetUserInfo 从Gin的Context中获取从jwt解析出来的用户角色id
-func GetUserInfo(c *gin.Context) *systemReq.CustomClaims {
+func GetUserInfo(c *gin.Context) *CustomClaims {
 	if claims, exists := c.Get("claims"); !exists {
 		if cl, err := GetClaims(c); err != nil {
 			return nil
@@ -68,7 +67,7 @@ func GetUserInfo(c *gin.Context) *systemReq.CustomClaims {
 			return cl
 		}
 	} else {
-		waitUse := claims.(*systemReq.CustomClaims)
+		waitUse := claims.(*CustomClaims)
 		return waitUse
 	}
 }

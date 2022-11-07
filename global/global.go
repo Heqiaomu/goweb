@@ -6,6 +6,6 @@ package global
 //GVA_CONFIG config.Server
 //GVA_Timer               timer.Timer = timer.NewTimerTask()
 //
-//BlackCache local_cache.Cache
+//BlackCache cache.Cache
 //lock       sync.RWMutex
 //)

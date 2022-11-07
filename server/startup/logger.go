@@ -1,6 +1,6 @@
 package startup
 
-import "gitee.com/goweb/tools/logger"
+import "github.com/sun-iot/goweb/tools/logger"
 
 func InitLogger() {
 	z := logger.Logger()

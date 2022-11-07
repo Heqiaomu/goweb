@@ -1,7 +1,7 @@
 package oss
 
 import (
-	"gitee.com/goweb/config"
+	"github.com/sun-iot/goweb/config"
 	"mime/multipart"
 )
 

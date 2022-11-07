@@ -1,4 +1,4 @@
-package local_cache
+package cache
 
 import (
 	"github.com/songzhibin97/gkit/cache/local_cache"

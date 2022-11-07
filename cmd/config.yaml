@@ -1,5 +1,6 @@
 system:
   env: public
+  model: dev
   addr: 8888
   db-type: mysql
   oss-type: local
@@ -15,14 +16,15 @@ jwt:
 
 zap:
   level: info
-  format: json
-  prefix: "[gitee.com/goweb/server]"
+  format: confole
+  prefix: "[github.com/sun-iot/goweb/server]"
   director: log
   show-line: true
-  encode-level: LowercaseColorLevelEncoder
+  encode-level: CapitalLevelEncoder
   file_max_backups: stacktrace
   file_max_age: true
   file_compress: true
+  log-in-console: true
 
 redis:
   db: 0

@@ -1,16 +1,16 @@
 package middleware
 
 import (
-	"gitee.com/goweb/config"
-	"gitee.com/goweb/model/common/response"
-	"gitee.com/goweb/model/dbmodel"
-	"gitee.com/goweb/service"
-	jwtTool "gitee.com/goweb/tools/jwt"
-	"gitee.com/goweb/tools/logger"
-	"gitee.com/goweb/tools/timer"
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/cast"
+	"github.com/sun-iot/goweb/config"
+	"github.com/sun-iot/goweb/model/common/response"
+	"github.com/sun-iot/goweb/model/dbmodel"
+	"github.com/sun-iot/goweb/service"
+	jwtTool "github.com/sun-iot/goweb/tools/jwt"
+	"github.com/sun-iot/goweb/tools/logger"
+	"github.com/sun-iot/goweb/tools/timer"
 	"go.uber.org/zap"
-	"strconv"
 	"time"
 )
 
@@ -46,13 +46,13 @@ func JWTAuth() gin.HandlerFunc {
 			return
 		}
 
-		if claims.ExpiresAt-time.Now().Unix() < claims.BufferTime {
+		if claims.ExpiresAt.Sub(time.Now()) < time.Duration(claims.BufferTime) {
 			dr, _ := timer.ParseDuration(config.GetConfig().JWT.ExpiresTime)
-			claims.ExpiresAt = time.Now().Add(dr).Unix()
+			claims.ExpiresAt = jwtTool.ParseNumericDate(time.Now().Add(dr))
 			newToken, _ := j.CreateTokenByOldToken(token, *claims)
 			newClaims, _ := j.ParseToken(newToken)
 			c.Header("new-token", newToken)
-			c.Header("new-expires-at", strconv.FormatInt(newClaims.ExpiresAt, 10))
+			c.Header("new-expires-at", cast.ToString(newClaims.ExpiresAt.Unix()))
 			if config.GetConfig().System.UseMultipoint {
 				RedisJwtToken, err := jwtService.GetRedisJWT(newClaims.Username)
 				if err != nil {

@@ -1,6 +1,6 @@
 package config
 
-import "gitee.com/goweb/tools/viperfile"
+import "github.com/sun-iot/goweb/tools/viperfile"
 
 type Server struct {
 	JWT    JWT    `mapstructure:"jwt" json:"jwt" yaml:"jwt"`

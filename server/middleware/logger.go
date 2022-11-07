@@ -7,8 +7,8 @@
 package middleware
 
 import (
-	"gitee.com/goweb/tools/logger"
 	"github.com/gin-gonic/gin"
+	"github.com/sun-iot/goweb/tools/logger"
 	"go.uber.org/zap"
 	"time"
 )

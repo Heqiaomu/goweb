@@ -2,8 +2,8 @@ package mysql
 
 import (
 	"context"
-	"gitee.com/goweb/config"
-	"gitee.com/goweb/global"
+	"github.com/sun-iot/goweb/config"
+	"github.com/sun-iot/goweb/global"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -40,12 +40,8 @@ func NewGormDB() error {
 	sqlDB.SetMaxOpenConns(m.MaxOpenConns)
 	return nil
 }
-func GormMysql() *gorm.DB {
-	return db
 
-}
-
-type DBBASE interface {
+type BASE interface {
 	GetLogMode() string
 }
 

@@ -2,37 +2,32 @@ package service
 
 import (
 	"context"
-	"gitee.com/goweb/config"
-	"gitee.com/goweb/model/dbmodel"
-	"gitee.com/goweb/tools/local_cache"
-	"gitee.com/goweb/tools/logger"
-	"gitee.com/goweb/tools/mysql"
-	"gitee.com/goweb/tools/redis"
-	timer2 "gitee.com/goweb/tools/timer"
+	"github.com/sun-iot/goweb/config"
+	"github.com/sun-iot/goweb/model/dbmodel"
+	"github.com/sun-iot/goweb/tools/cache"
+	"github.com/sun-iot/goweb/tools/logger"
+	"github.com/sun-iot/goweb/tools/mysql"
+	"github.com/sun-iot/goweb/tools/redis"
+	timeUtil "github.com/sun-iot/goweb/tools/timer"
 	"go.uber.org/zap"
 )
 
 type JwtService struct {
 }
 
-//@description: 拉黑jwt
-//@param: jwtList model.JwtBlacklist
-//@return: err error
-
+// JsonInBlacklist 拉黑
 func (jwtService *JwtService) JsonInBlacklist(jwtList dbmodel.JwtBlacklist) (err error) {
 	err = mysql.GetDB(context.Background()).Create(&jwtList).Error
 	if err != nil {
 		return
 	}
-	local_cache.GetLocalCache().SetDefault(jwtList.Jwt, struct{}{})
+	cache.GetLocalCache().SetDefault(jwtList.Jwt, struct{}{})
 	return
 }
 
-// @function: IsBlacklist
-// @description: 判断JWT是否在黑名单内部
-
+// IsBlacklist 判断是否在黑名单
 func (jwtService *JwtService) IsBlacklist(jwt string) bool {
-	_, ok := local_cache.GetLocalCache().Get(jwt)
+	_, ok := cache.GetLocalCache().Get(jwt)
 	return ok
 }
 
@@ -43,7 +38,7 @@ func (jwtService *JwtService) GetRedisJWT(userName string) (redisJWT string, err
 
 func (jwtService *JwtService) SetRedisJWT(jwt string, userName string) (err error) {
 	// 此处过期时间等于jwt过期时间
-	dr, err := timer2.ParseDuration(config.GetConfig().JWT.ExpiresTime)
+	dr, err := timeUtil.ParseDuration(config.GetConfig().JWT.ExpiresTime)
 	if err != nil {
 		return err
 	}
@@ -60,6 +55,6 @@ func LoadAll() {
 		return
 	}
 	for i := 0; i < len(data); i++ {
-		local_cache.GetLocalCache().SetDefault(data[i], struct{}{})
+		cache.GetLocalCache().SetDefault(data[i], struct{}{})
 	} // jwt黑名单 加入 BlackCache 中
 }
